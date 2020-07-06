@@ -1,11 +1,7 @@
 # Follow single KIM
 
-[Twitter](https://twitter.com/3rdwave_themes)
+[Twitter](https://twitter.com/digipol)
 
-[Facebook](https://www.facebook.com/3rdwavethemes/)
+[Facebook](https://www.facebook.com/charles.kim.5030927)
 
-[Dribbble](https://dribbble.com/Xiaoying)
-
-[Medium](https://medium.com/@3rdwave_themes)
-
-[Linkedin](https://uk.linkedin.com/in/xiaoying)
+[Linkedin](https://www.linkedin.com/in/charles-kim-aa319a8b/)
