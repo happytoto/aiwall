@@ -135,9 +135,6 @@
       <button type="button" onclick="init()">카메라로 해커인지 아닌지 확인해 볼까요? Start!</button>
 </div>
 
-
-    <button type="button" onclick="init()">Start</button>
-    <button type="button" onclick="predict()">Predict</button>
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
         <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
@@ -193,6 +190,7 @@
         // More API functions here:
         // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
         // the link to your model provided by Teachable Machine export panel
+
         // cskim  티처블 머신러닝 
         const URL = "https://teachablemachine.withgoogle.com/models/6XvjORXEJ/";
         let model, webcam, labelContainer, maxPredictions;
@@ -223,6 +221,13 @@
             }
         }
     </script>
+
+
+
+
+
+    <button type="button" onclick="init()">Start</button>
+    <button type="button" onclick="predict()">Predict</button>
 
 
 
