@@ -1078,7 +1078,7 @@ a:focus {
   width: 100%;
   margin: 0;
   color: #fff;
-  background: #1FB264;
+  background: #04b657;
   border: none;
   padding: 10px;
   border-radius: 4px;
@@ -1119,13 +1119,13 @@ a:focus {
 
 .image-upload-wrap {
   margin-top: 20px;
-  border: 4px dashed #1FB264;
+  border: 4px dashed #1fb2ab;
   position: relative;
 }
 
 .image-dropping,
 .image-upload-wrap:hover {
-  background-color: #1FB264;
+  background-color: #40babd;
   border: 4px dashed #ffffff;
 }
 
@@ -1141,7 +1141,7 @@ a:focus {
 .drag-text h3 {
   font-weight: 100;
   text-transform: uppercase;
-  color: #15824B;
+  color: #40babd;
   padding: 60px 0;
 }
 
@@ -1156,7 +1156,7 @@ a:focus {
   width: 200px;
   margin: 0;
   color: #fff;
-  background: #cd4535;
+  background: #40babd;
   border: none;
   padding: 10px;
   border-radius: 4px;
