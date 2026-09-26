@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-26T08:30:00Z",
+  "title": "Design System: 로켓보안",
+  "extensions": {
+    "colorMeta": {
+      "rocket-red": { "role": "primary", "displayName": "Rocket Red", "canonical": "#cc2a14", "tonalRamp": ["#3d0c06", "#5e130a", "#801a0e", "#a8210f", "#cc2a14", "#e2553f", "#f08e7f", "#fbd3cc"] },
+      "rocket-red-deep": { "role": "primary", "displayName": "Rocket Red Deep", "canonical": "#a8210f" },
+      "station-white": { "role": "neutral", "displayName": "Station White", "canonical": "#f5f6f7" },
+      "flight-ink": { "role": "neutral", "displayName": "Flight Ink", "canonical": "#121416", "tonalRamp": ["#121416", "#24282c", "#383d42", "#4a4f55", "#6b7178", "#9aa0a6", "#c9cdd1", "#f5f6f7"] },
+      "manual-gray": { "role": "neutral", "displayName": "Manual Gray", "canonical": "#4a4f55" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "첫 화면 헤드라인만." },
+      "headline": { "displayName": "Headline", "purpose": "섹션 제목." },
+      "body": { "displayName": "Body", "purpose": "설명문." },
+      "label": { "displayName": "Label", "purpose": "도면 라벨과 절차 상자 머리의 영문 표기. 11px 미만 금지." },
+      "figure": { "displayName": "Figure", "purpose": "임무 기록 수치." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-expo-out", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "도면선 그리기, 모듈 점등, 버튼 전환." },
+      { "name": "draw", "value": "1.6s", "purpose": "첫 로딩 때 설계도 선이 한 번 그려짐. prefers-reduced-motion이면 생략." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "900px" },
+      { "name": "narrow", "value": "480px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "도킹 신청 같은 주 행동.",
+      "html": "<a class=\"ds-btn\" href=\"#\">도킹 신청 <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l14 0\"/><path d=\"M13 18l6 -6\"/><path d=\"M13 6l6 6\"/></svg></a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; background: #cc2a14; color: #fff; font: 700 1rem/1 'Pretendard Variable', sans-serif; text-decoration: none; border-radius: 0; transition: background .2s; } .ds-btn:hover { background: #a8210f; } .ds-btn:focus-visible { outline: 3px solid #121416; outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "64px 상단 바.",
+      "html": "<nav class=\"ds-nav\"><b>로켓보안</b><span><a href=\"#\">진단 모듈</a><a href=\"#\">컨설팅 모듈</a><a href=\"#\">임무 기록</a></span></nav>",
+      "css": ".ds-nav { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: #f5f6f7; border-bottom: 1px solid rgb(18 20 22 / .16); font-family: 'Pretendard Variable', sans-serif; } .ds-nav span { display: flex; gap: 28px; } .ds-nav a { color: #4a4f55; text-decoration: none; } .ds-nav a:hover { color: #121416; }"
+    },
+    {
+      "name": "Procedure Box",
+      "kind": "custom",
+      "refersTo": "procedure-header",
+      "description": "서비스 절차 체크리스트.",
+      "html": "<div class=\"ds-proc\"><header><b>진단 모듈</b><span>PROCEDURE</span></header><ol><li>시스템 취약점 진단</li><li>결함 목록과 보완 방법 정리</li></ol></div>",
+      "css": ".ds-proc { border: 1.5px solid #121416; font-family: 'Pretendard Variable', sans-serif; max-width: 34em; } .ds-proc header { display: flex; justify-content: space-between; padding: 10px 16px; background: #121416; color: #f5f6f7; } .ds-proc header span { font-size: .75rem; letter-spacing: .08em; } .ds-proc ol { list-style: none; padding: 6px 16px; margin: 0; } .ds-proc li { padding: 12px 0; } .ds-proc li + li { border-top: 1px dashed rgb(18 20 22 / .16); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "정거장 운영 매뉴얼",
+    "overview": "로켓보안은 하나의 궤도 정거장처럼 보인다. 1970년대 우주기관 그래픽 표준 매뉴얼의 문법을 따르며, 밝은 종이 바탕 위에 로켓 레드가 화면의 큰 면을 차지하고, 서비스는 정거장 설계도의 모듈로 설명된다.",
+    "keyCharacteristics": ["로켓 레드 면과 밝은 바탕의 강한 대비", "흰 도면선으로 그린 정거장 설계도가 서비스 지도 역할", "직각 모서리, 그림자 없음, 얇은 선과 점선 구분", "영문 확장폭 라벨(Archivo Expanded)과 한글 본문(Pretendard)의 짝"],
+    "rules": [
+      { "name": "The One Red Rule", "body": "강조색은 로켓 레드 하나뿐이다. 다른 색의 배지·상태 표시를 더하지 않는다.", "section": "colors" },
+      { "name": "The No Eyebrow Rule", "body": "섹션 제목 위에 작은 라벨을 두지 않는다. 모듈 이름은 절차 상자 머리와 설계도에 적는다.", "section": "typography" },
+      { "name": "The Flat Manual Rule", "body": "모든 면은 평평하다. 입체 효과가 필요하면 선과 면의 대비로 푼다.", "section": "elevation" }
+    ],
+    "dos": ["Do 강조가 필요하면 로켓 레드 면을 크게 쓴다.", "Do 서비스 설명은 설계도의 모듈 이름과 일치시킨다.", "Do 수치는 PRODUCT.md에 있는 사례 값만 쓴다."],
+    "donts": ["Don't 모서리를 둥글리거나 그림자를 넣지 않는다.", "Don't 섹션 제목 위에 작은 라벨을 두지 않는다.", "Don't 로켓 레드 외의 강조색을 추가하지 않는다."]
+  }
+}

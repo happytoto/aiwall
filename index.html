@@ -3,139 +3,291 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>로켓보안 | 빠르고 강한 보안</title>
-<meta name="description" content="빠르고 강한 로켓보안. 위협을 빠르게 찾고 강하게 막는 보안 서비스입니다.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23f97316%22/%3E%3C/svg%3E">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<title>로켓보안 | 빠르고 강한 보안 진단·컨설팅</title>
+<meta name="description" content="빠르고 강한 로켓보안. 중소·중견기업을 위한 취약점 진단·모의해킹과 보안 컨설팅·인증 대응을 며칠 단위로 끝냅니다.">
+<meta name="theme-color" content="#cc2a14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%23cc2a14%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%228%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%223%22/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/archivo/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/pretendard/pretendardvariable-dynamic-subset.css">
 <style>
-:root {
-  --bg: #f4f4f5; --surface: #ffffff; --text: #18181b; --muted: #52525b;
-  --line: #e4e4e7; --accent: #c2410c; --accent-ink: #ffffff; --tint: #fff1e8;
-  --radius: 14px;
+@font-face {
+  font-family: "Archivo Expanded";
+  src: url(fonts/archivo/archivo-latin-wdth-normal.woff2) format("woff2-variations");
+  font-weight: 100 900; font-stretch: 62% 125%; font-display: swap;
+  unicode-range: U+0000-00FF, U+2013-2014, U+2019, U+201C-201D;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0c0c0e; --surface: #17171a; --text: #f4f4f5; --muted: #a1a1aa;
-    --line: #27272a; --accent: #f97316; --accent-ink: #1c0a02; --tint: #2a1508;
-  }
+:root {
+  --paper: #f5f6f7; --ink: #121416; --muted: #4a4f55; --line: rgb(18 20 22 / .16);
+  --red: #cc2a14; --red-deep: #a8210f; --on-red: #ffffff; --on-red-soft: rgb(255 255 255 / .82);
+  --ko: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --en: "Archivo Expanded", var(--ko);
+  --nav: 64px; --gutter: clamp(20px, 4vw, 56px);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  color-scheme: light;
 }
 * { box-sizing: border-box; margin: 0; }
-body { background: var(--bg); color: var(--text); font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; word-break: keep-all; }
-a { color: inherit; text-decoration: none; }
-.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav); scrollbar-color: var(--red) var(--paper); accent-color: var(--red); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--paper); color: var(--ink); font: 400 17px/1.65 var(--ko); word-break: keep-all; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--red); color: var(--on-red); }
+a { color: inherit; text-underline-offset: .22em; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.panel :focus-visible, .dock :focus-visible { outline-color: var(--on-red); }
+svg.i { width: 1.15em; height: 1.15em; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.en { font-family: var(--en); font-stretch: 125%; letter-spacing: .08em; text-transform: uppercase; }
+.num { font-family: var(--en); font-variant-numeric: tabular-nums; }
 
 /* nav */
-.nav { height: 68px; display: flex; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
-.brand i { color: var(--accent); font-size: 1.5rem; }
-.nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: 0.95rem; color: var(--muted); }
-.nav ul a:hover { color: var(--text); }
+.top { position: sticky; top: 0; z-index: 10; height: var(--nav); background: var(--paper); border-bottom: 1px solid var(--line); }
+.top .in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 var(--gutter); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand .mark { width: 30px; height: 30px; }
+.brand b { font-weight: 800; font-size: 1.15rem; letter-spacing: -.02em; }
+.brand small { font-size: .72rem; color: var(--muted); display: block; line-height: 1; margin-top: 2px; }
+.links { display: flex; align-items: center; gap: 28px; list-style: none; padding: 0; font-size: .95rem; }
+.links a { text-decoration: none; color: var(--muted); }
+.links a:hover { color: var(--ink); }
+.links a.btn, .links a.btn:hover { color: var(--on-red); }
 
-.btn { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; padding: 14px 24px; border-radius: 999px; font-weight: 700; font-size: 1rem; transition: transform .2s cubic-bezier(.16,1,.3,1), background .2s; }
-.btn:active { transform: scale(.97); }
-.btn-primary { background: var(--accent); color: var(--accent-ink); }
-.btn-primary:hover { transform: translateY(-2px); }
-.btn-ghost { border: 1px solid var(--line); color: var(--text); }
-.btn-ghost:hover { border-color: var(--muted); }
-.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; padding: 15px 26px; font: 700 1rem/1 var(--ko); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: background .2s, color .2s, transform .2s var(--ease); }
+.btn:active { transform: translateY(1px); }
+.btn-red { background: var(--red); color: var(--on-red); }
+.btn-red:hover { background: var(--red-deep); }
+.btn-sm { padding: 11px 18px; font-size: .92rem; }
+.btn .i { transition: transform .25s var(--ease); }
+.btn:hover .i { transform: translateX(3px); }
+.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
 
-/* hero: 좌 텍스트 / 우 이미지 */
-.hero { min-height: calc(100dvh - 68px); display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; padding: 32px 0 64px; }
-.hero h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.12; letter-spacing: -0.035em; font-weight: 800; }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero p { margin-top: 20px; font-size: 1.15rem; color: var(--muted); max-width: 34ch; }
-.cta { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
-.hero figure { aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--surface); }
-.hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* station layout: story left, sticky schematic right */
+.station-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "intro panel" "rest panel"; }
+.intro { grid-area: intro; min-height: calc(100dvh - var(--nav)); display: flex; flex-direction: column; justify-content: center; padding: 48px var(--gutter) 64px; }
+.rest { grid-area: rest; padding: 0 var(--gutter) 40px; }
+.panel { grid-area: panel; background: var(--red); color: var(--on-red); }
+.panel-in { position: sticky; top: var(--nav); height: calc(100dvh - var(--nav)); display: grid; grid-template-rows: auto 1fr auto; padding: 28px clamp(24px, 3vw, 44px); }
+.panel-head, .panel-foot { display: flex; justify-content: space-between; gap: 16px; font-size: .72rem; color: var(--on-red-soft); }
+.panel-head b { color: var(--on-red); font-weight: 700; }
+.panel-foot { align-items: end; border-top: 1px solid rgb(255 255 255 / .35); padding-top: 16px; font-size: .95rem; color: var(--on-red); }
+.panel-foot .where { font-weight: 700; }
+.panel-foot .en { font-size: .75rem; color: var(--on-red-soft); }
+.station { width: 100%; height: 100%; max-height: 62vh; align-self: center; overflow: visible; }
 
-/* 핵심 가치: 비대칭 bento 3칸 */
-.values { padding: 96px 0; border-top: 1px solid var(--line); }
-.values h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -0.03em; line-height: 1.25; }
-.bento { margin-top: 40px; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 16px; }
-.cell { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; }
-.cell i { font-size: 1.9rem; color: var(--accent); }
-.cell h3 { margin-top: 18px; font-size: 1.3rem; letter-spacing: -0.02em; }
-.cell p { margin-top: 8px; color: var(--muted); max-width: 42ch; }
-.cell.big { grid-row: span 2; background: var(--tint); border-color: transparent; display: flex; flex-direction: column; justify-content: space-between; }
-.cell.big h3 { font-size: 1.8rem; }
-.cell.photo { padding: 0; overflow: hidden; position: relative; min-height: 220px; }
-.cell.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+h1 { font-size: clamp(2.6rem, 4.6vw, 4.4rem); line-height: 1.12; letter-spacing: -.04em; font-weight: 800; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--red); }
+.lead { margin-top: 22px; font-size: clamp(1.05rem, 1.3vw, 1.2rem); color: var(--muted); max-width: 30em; }
+.cta { margin-top: 36px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
 
-footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-
-/* 등장 모션: 첫 화면 위계를 순서대로 보여 줌 */
+/* schematic */
+.station .draw { fill: none; stroke: var(--on-red); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.station .fine { stroke-width: .8; opacity: .7; }
+.station .leader { fill: none; stroke: var(--on-red); stroke-width: 1; stroke-dasharray: 3 4; opacity: .55; vector-effect: non-scaling-stroke; transition: opacity .4s; }
+.station .lbl { fill: var(--on-red); opacity: .6; transition: opacity .4s; }
+.station .lbl .en { font-size: 12px; letter-spacing: .14em; }
+.station .lbl .ko { font-family: var(--ko); font-size: 15px; font-weight: 700; letter-spacing: 0; text-transform: none; font-stretch: normal; }
+.station .body { transition: fill .45s var(--ease); }
+.module.on .body, .hub .body { fill: var(--on-red); }
+.hub .body { fill: rgb(255 255 255 / .22); }
+.module.on .fine { stroke: var(--red); opacity: 1; }
+.module.on .lbl, .module.on .leader { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) {
-  .rise { opacity: 0; transform: translateY(16px); animation: rise .7s cubic-bezier(.16,1,.3,1) forwards; animation-delay: calc(var(--i, 0) * 90ms); }
-  @keyframes rise { to { opacity: 1; transform: none; } }
+  .station .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s var(--ease) forwards; }
+  .station .array .draw { animation-delay: .35s; }
+  .station .module .draw { animation-delay: .15s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .rise { animation: rise .8s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 }
 
-@media (max-width: 767px) {
-  .nav ul { display: none; }
-  .hero { grid-template-columns: 1fr; gap: 32px; min-height: auto; padding: 24px 0 48px; }
-  .hero figure { aspect-ratio: 16 / 10; }
-  .bento { grid-template-columns: 1fr; }
-  .cell.big { grid-row: auto; }
-  .values { padding: 64px 0; }
+/* module sections */
+.step { padding: 88px 0 48px; min-height: 62vh; display: flex; flex-direction: column; justify-content: center; }
+.step + .step { border-top: 1px solid var(--line); }
+h2 { font-size: clamp(1.9rem, 2.8vw, 2.6rem); line-height: 1.2; letter-spacing: -.03em; font-weight: 800; text-wrap: balance; }
+.step > p { margin-top: 14px; color: var(--muted); max-width: 32em; }
+.procedure { margin-top: 32px; border: 1.5px solid var(--ink); max-width: 34em; }
+.procedure header { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--ink); color: var(--paper); }
+.procedure .ph { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: .95rem; }
+.procedure .ph .i { color: #ff8a73; }
+.procedure header .en { font-size: .75rem; opacity: .75; }
+.procedure ol { list-style: none; padding: 6px 16px; }
+.procedure li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; padding: 12px 0; }
+.procedure li + li { border-top: 1px dashed var(--line); }
+.procedure li .i { color: var(--red); margin-top: 4px; }
+
+/* missions */
+.missions .log { margin-top: 36px; display: grid; gap: 0; }
+.mission { padding: 26px 0; display: grid; gap: 14px; }
+.mission + .mission { border-top: 1px solid var(--line); }
+.mission-who { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.mission-who b { font-size: 1.08rem; }
+.mission-who span { color: var(--muted); font-size: .92rem; }
+.mission-body { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
+.mission-count { font-size: clamp(2.4rem, 3.6vw, 3.2rem); font-weight: 700; line-height: 1; color: var(--red); letter-spacing: -.02em; }
+.mission-count small { font-family: var(--ko); font-size: 1rem; font-weight: 700; color: var(--ink); margin-left: 4px; letter-spacing: 0; }
+.mission-body p { color: var(--muted); font-size: .98rem; }
+.days { display: grid; grid-template-columns: repeat(7, 1fr) auto; gap: 4px; align-items: center; }
+.days i { height: 12px; border: 1px solid var(--ink); }
+.days i.on { background: var(--red); border-color: var(--red); }
+.days b { font-size: .9rem; padding-left: 10px; white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .days i.on { transform-origin: left; transform: scaleX(0); transition: transform .5s var(--ease); transition-delay: calc(var(--d) * 110ms); }
+  .mission.seen .days i.on { transform: none; }
+}
+.note { margin-top: 18px; font-size: .85rem; color: var(--muted); }
+
+/* dock (contact) */
+.dock { background: var(--red); color: var(--on-red); padding: clamp(72px, 10vw, 128px) var(--gutter); }
+.dock .in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: end; }
+.dock h2 { font-size: clamp(2.2rem, 4.2vw, 3.8rem); margin: 0; }
+.dock p { color: var(--on-red-soft); margin-top: 18px; max-width: 30em; font-size: 1.1rem; }
+.dock-contact { border-top: 2px solid var(--on-red); padding-top: 20px; display: grid; gap: 10px; }
+.dock-contact .en { font-size: .75rem; color: var(--on-red-soft); }
+.dock-contact strong { font-size: 1.35rem; }
+
+footer { padding: 28px var(--gutter) 36px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .88rem; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .links li:not(:last-child) { display: none; }
+  .station-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "panel" "rest"; }
+  .intro { min-height: auto; padding: 40px var(--gutter) 48px; }
+  .panel-in { position: static; height: auto; gap: 18px; padding: 22px var(--gutter); }
+  .station { max-height: none; height: auto; }
+  .station .lbl .en { display: none; }
+  .station .lbl .ko { font-size: 26px; }
+  .step { min-height: auto; padding: 64px 0 24px; }
+  .dock .in { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .brand small { display: none; }
+  .mission-body { grid-template-columns: minmax(0, 1fr); gap: 8px; }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="nav">
-    <a class="brand" href="./"><i class="ti ti-rocket" aria-hidden="true"></i>로켓보안</a>
+<header class="top">
+  <div class="in">
+    <a class="brand" href="./" aria-label="로켓보안 홈">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#cc2a14"/><circle cx="16" cy="16" r="8" fill="none" stroke="#fff" stroke-width="3"/><circle cx="24" cy="10" r="2.5" fill="#fff"/></svg>
+      <span><b>로켓보안</b><small class="en">Rocket Security</small></span>
+    </a>
     <nav aria-label="주요 메뉴">
-      <ul>
-        <li><a href="#values">서비스</a></li>
+      <ul class="links">
+        <li><a href="#diagnose">진단 모듈</a></li>
+        <li><a href="#consult">컨설팅 모듈</a></li>
+        <li><a href="#missions">임무 기록</a></li>
+        <li><a class="btn btn-red btn-sm" href="#dock">도킹 신청</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary" href="#contact">도입 문의</a>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
+<main>
+  <div class="station-layout">
+    <section class="intro" data-step="dock" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="rise" style="--i:0">보안 과제,<br><em>며칠 만에</em> 끝냅니다</h1>
+      <p class="lead rise" style="--i:1">중소·중견기업을 위한 취약점 진단과 보안 컨설팅. 빠르고 강한 로켓보안이 찾고, 고치고, 적용까지 함께합니다.</p>
+      <div class="cta rise" style="--i:2">
+        <a class="btn btn-red" href="#dock">도킹 신청 <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg></a>
+        <a class="link-arrow" href="#diagnose">정거장 둘러보기</a>
+      </div>
+    </section>
+
+    <aside class="panel" aria-label="로켓보안 정거장 안내도">
+      <div class="panel-in">
+        <div class="panel-head"><span><b>로켓보안 정거장 안내도</b></span><span class="en">Rocket Security Station</span></div>
+        <svg class="station" viewBox="0 0 720 480" role="img" aria-label="로켓보안 정거장 설계도: 도킹 포트, 진단 모듈, 허브, 컨설팅 모듈, 임무 기록 보관소가 한 줄로 연결되어 있습니다."><g class="array"><rect class="draw" pathLength="1" x="0" y="56" width="90" height="160"/><path class="draw fine" pathLength="1" d="M22.5 56v160M45.0 56v160M67.5 56v160M0 78.9h90M0 101.7h90M0 124.6h90M0 147.4h90M0 170.3h90M0 193.1h90"/><rect class="draw" pathLength="1" x="0" y="276" width="90" height="160"/><path class="draw fine" pathLength="1" d="M22.5 276v160M45.0 276v160M67.5 276v160M0 298.9h90M0 321.7h90M0 344.6h90M0 367.4h90M0 390.3h90M0 413.1h90"/><path class="draw" pathLength="1" d="M45 216V236M45 276V256"/><rect class="draw" pathLength="1" x="630" y="56" width="90" height="160"/><path class="draw fine" pathLength="1" d="M652.5 56v160M675.0 56v160M697.5 56v160M630 78.9h90M630 101.7h90M630 124.6h90M630 147.4h90M630 170.3h90M630 193.1h90"/><rect class="draw" pathLength="1" x="630" y="276" width="90" height="160"/><path class="draw fine" pathLength="1" d="M652.5 276v160M675.0 276v160M697.5 276v160M630 298.9h90M630 321.7h90M630 344.6h90M630 367.4h90M630 390.3h90M630 413.1h90"/><path class="draw" pathLength="1" d="M675 216V236M675 276V256"/></g><g class="truss"><rect class="draw" pathLength="1" x="90" y="236" width="84" height="20"/><rect class="draw" pathLength="1" x="546" y="236" width="84" height="20"/><path class="draw fine" pathLength="1" d="M0 236L10 256L20 236L30 256L40 236L50 256L60 236L70 256L80 236L90 256"/><path class="draw fine" pathLength="1" d="M630 236L640 256L650 236L660 256L670 236L680 256L690 236L700 256L710 236L720 256"/><path class="draw" pathLength="1" d="M0 236H90M0 256H90M630 236H720M630 256H720"/></g><g class="module" data-module="dock"><rect class="draw body" pathLength="1" x="174" y="224" width="36" height="44"/><path class="leader" d="M192.0 268V326"/><text class="lbl" x="192.0" y="344" text-anchor="middle"><tspan class="en" x="192.0">DOCKING PORT</tspan><tspan class="ko" x="192.0" dy="20">도킹 포트</tspan></text></g><g class="module" data-module="diagnose"><rect class="draw body" pathLength="1" x="218" y="208" width="104" height="76"/><path class="draw fine" pathLength="1" d="M230 224h80M230 268h80"/><path class="leader" d="M270.0 208V150"/><text class="lbl" x="270.0" y="116" text-anchor="middle"><tspan class="en" x="270.0">DIAGNOSTICS</tspan><tspan class="ko" x="270.0" dy="20">진단 모듈</tspan></text></g><g class="hub"><rect class="draw body" pathLength="1" x="330" y="198" width="60" height="96"/></g><g class="module" data-module="consult"><rect class="draw body" pathLength="1" x="398" y="208" width="104" height="76"/><path class="draw fine" pathLength="1" d="M410 224h80M410 268h80"/><path class="leader" d="M450.0 284V342"/><text class="lbl" x="450.0" y="360" text-anchor="middle"><tspan class="en" x="450.0">CONSULTING</tspan><tspan class="ko" x="450.0" dy="20">컨설팅 모듈</tspan></text></g><g class="module" data-module="log"><rect class="draw body" pathLength="1" x="510" y="218" width="36" height="56"/><path class="leader" d="M528.0 218V160"/><text class="lbl" x="528.0" y="126" text-anchor="middle"><tspan class="en" x="528.0">MISSION LOG</tspan><tspan class="ko" x="528.0" dy="20">임무 기록</tspan></text></g></svg>
+        <div class="panel-foot"><span>현재 구역: <span class="where" id="where">도킹 포트</span></span><span class="en" id="where-en">Docking Port</span></div>
+      </div>
+    </aside>
+
+    <div class="rest">
+      <section class="step" id="diagnose" data-step="diagnose" aria-labelledby="diagnose-title">
+        <h2 id="diagnose-title">공격자보다 먼저 약점을 찾습니다</h2>
+        <p>취약점 진단과 모의해킹으로 시스템에 들어올 수 있는 길을 확인하고, 막는 방법까지 정리합니다.</p>
+        <div class="procedure">
+          <header><span class="ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12h-8a1 1 0 1 0 -1 1v8a9 9 0 0 0 9 -9"/><path d="M16 9a5 5 0 1 0 -7 7"/><path d="M20.486 9a9 9 0 1 0 -11.482 11.495"/></svg>진단 모듈</span><span class="en">Procedure</span></header>
+          <ol>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>시스템 취약점 진단</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>모의해킹으로 실제 공격 경로 확인</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>결함 목록과 보완 방법 정리</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>보완 조치 적용까지 확인</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="step" id="consult" data-step="consult" aria-labelledby="consult-title">
+        <h2 id="consult-title">인증 심사와 보안 정책, 기한 안에 준비합니다</h2>
+        <p>인증 심사 대응, 개인정보영향평가, 보안 정책 수립까지. 해야 할 일을 빠르게 정리하고 회사에 적용합니다.</p>
+        <div class="procedure">
+          <header><span class="ph"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5"/><path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5"/></svg>컨설팅 모듈</span><span class="en">Procedure</span></header>
+          <ol>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>인증 심사 결함 점검과 보완</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>개인정보영향평가 결과물 리뷰</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>회사 맞춤 보안 정책·지침 수립</li>
+            <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>전사 적용 지원</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="step missions" id="missions" data-step="log" aria-labelledby="missions-title">
+        <h2 id="missions-title">며칠 만에 끝낸 실제 임무입니다</h2>
+        <div class="log">
+          <article class="mission">
+            <div class="mission-who"><b>XX금융회사</b><span>인증 심사 대응</span></div>
+            <div class="days" role="img" aria-label="소요 기간 7일"><i class="on" style="--d:0"></i><i class="on" style="--d:1"></i><i class="on" style="--d:2"></i><i class="on" style="--d:3"></i><i class="on" style="--d:4"></i><i class="on" style="--d:5"></i><i class="on" style="--d:6"></i><b>일주일</b></div>
+            <div class="mission-body"><span class="mission-count num">72<small>가지</small></span><p>인증 심사 결함을 추가로 찾아내 보완 조치했습니다.</p></div>
+          </article>
+          <article class="mission">
+            <div class="mission-who"><b>공공기관 중앙행정 XX부</b><span>개인정보영향평가</span></div>
+            <div class="days" role="img" aria-label="소요 기간 4일"><i class="on" style="--d:0"></i><i class="on" style="--d:1"></i><i class="on" style="--d:2"></i><i class="on" style="--d:3"></i><i></i><i></i><i></i><b>4일</b></div>
+            <div class="mission-body"><span class="mission-count num">60<small>가지</small></span><p>컨설팅 결과물을 리뷰하고 보완 조치를 적용해 제출했습니다.</p></div>
+          </article>
+          <article class="mission">
+            <div class="mission-who"><b>중소기업</b><span>보안 정책 수립</span></div>
+            <div class="days" role="img" aria-label="소요 기간 3일"><i class="on" style="--d:0"></i><i class="on" style="--d:1"></i><i class="on" style="--d:2"></i><i></i><i></i><i></i><i></i><b>3일</b></div>
+            <div class="mission-body"><span class="mission-count num">10<small>가지</small></span><p>보안 정책이 없던 회사에 맞춤 보안 정책 지침을 수립하고 전사에 적용했습니다.</p></div>
+          </article>
+        </div>
+        <p class="note">고객 보호를 위해 기관명은 익명으로 표기했습니다.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="dock" id="dock" aria-labelledby="dock-title">
+    <div class="in">
       <div>
-        <h1 class="rise" style="--i:0">위협보다 먼저,<br><em>로켓처럼</em> 막습니다</h1>
-        <p class="rise" style="--i:1">AI가 위협을 먼저 찾고 바로 차단합니다. 기업 서비스를 빠르고 단단하게 지킵니다.</p>
-        <div class="cta rise" style="--i:2">
-          <a class="btn btn-primary" href="#contact">도입 문의 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
-          <a class="btn btn-ghost" href="#values">서비스 보기</a>
-        </div>
+        <h2 id="dock-title">과제와 기한을 알려 주세요</h2>
+        <p>도킹 신청을 남기시면 로켓보안이 점검 범위와 임무 일정을 먼저 제안합니다.</p>
       </div>
-      <figure class="rise" style="--i:1">
-        <!-- TODO: 브랜드 실사 이미지로 교체 (권장 1200x1500) -->
-        <img src="https://picsum.photos/seed/rocket-security-hero/1200/1500" alt="보안 관제 환경" width="1200" height="1500" fetchpriority="high">
-      </figure>
-    </section>
-
-    <section id="values" class="values">
-      <h2>탐지와 차단을 한 흐름으로</h2>
-      <div class="bento">
-        <article class="cell big">
-          <i class="ti ti-bolt" aria-hidden="true"></i>
-          <div>
-            <h3>빠른 탐지</h3>
-            <p>AI가 이상 징후를 실시간으로 살피고, 위협을 발견하면 바로 알립니다.</p>
-          </div>
-        </article>
-        <article class="cell">
-          <i class="ti ti-shield-lock" aria-hidden="true"></i>
-          <h3>강한 차단</h3>
-          <p>확인된 위협은 서비스에 닿기 전에 자동으로 막습니다.</p>
-        </article>
-        <div class="cell photo">
-          <!-- TODO: 서비스 운영 사진으로 교체 (권장 800x500) -->
-          <img src="https://picsum.photos/seed/rocket-security-ops/800/500" alt="" loading="lazy">
-        </div>
+      <div class="dock-contact">
+        <span class="en">Docking Request</span>
+        <!-- TODO: 실제 문의 이메일·전화로 교체 -->
+        <strong>문의 연락처 준비 중</strong>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
-  <footer id="contact">
-    <span>© 로켓보안. 빠르고 강한 보안</span>
-    <!-- TODO: 실제 문의 이메일로 교체 -->
-    <span>도입 문의: 연락처 준비 중</span>
-  </footer>
-</div>
+<footer>
+  <span><b>로켓보안</b> · 빠르고 강한 로켓보안</span>
+  <span>© 2026 로켓보안</span>
+</footer>
+
+<script>
+(() => {
+  const names = { dock: ["도킹 포트", "Docking Port"], diagnose: ["진단 모듈", "Diagnostics"], consult: ["컨설팅 모듈", "Consulting"], log: ["임무 기록", "Mission Log"] };
+  const mods = document.querySelectorAll(".station .module");
+  const where = document.getElementById("where"), whereEn = document.getElementById("where-en");
+  const light = id => {
+    mods.forEach(m => m.classList.toggle("on", m.dataset.module === id));
+    [where.textContent, whereEn.textContent] = names[id];
+  };
+  light("dock");
+  if (!("IntersectionObserver" in window)) return;
+  // A step owns the schematic while it crosses the middle band of the viewport.
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && light(e.target.dataset.step)), { rootMargin: "-45% 0px -45% 0px" });
+  document.querySelectorAll("[data-step]").forEach(s => io.observe(s));
+  const seen = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("seen"); seen.unobserve(e.target); } }), { threshold: .4 });
+  document.querySelectorAll(".mission").forEach(m => seen.observe(m));
+})();
+</script>
 </body>
 </html>
