@@ -1,621 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <title>ICTIS AI Service 한국통신인터넷기술 인공지능 보안서비스 </title>
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ICTIS AI Service 한국통신인터넷기술 인공지능 보안서비스 ">
-    <meta name="author" content="김기술사 happytoto 앳 gmail.com">    
-    <link rel="shortcut icon" href="favicon.ico">  
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <!-- FontAwesome JS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
-    <!-- Theme CSS -->  
-    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로켓보안 | 빠르고 강한 보안</title>
+<meta name="description" content="빠르고 강한 로켓보안. 위협을 빠르게 찾고 강하게 막는 보안 서비스입니다.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23f97316%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #f4f4f5; --surface: #ffffff; --text: #18181b; --muted: #52525b;
+  --line: #e4e4e7; --accent: #c2410c; --accent-ink: #ffffff; --tint: #fff1e8;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0c0e; --surface: #17171a; --text: #f4f4f5; --muted: #a1a1aa;
+    --line: #27272a; --accent: #f97316; --accent-ink: #1c0a02; --tint: #2a1508;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--text); font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    <script data-ad-client="ca-pub-0799661265647685" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+/* nav */
+.nav { height: 68px; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+.brand i { color: var(--accent); font-size: 1.5rem; }
+.nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: 0.95rem; color: var(--muted); }
+.nav ul a:hover { color: var(--text); }
 
-</head> 
+.btn { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; padding: 14px 24px; border-radius: 999px; font-weight: 700; font-size: 1rem; transition: transform .2s cubic-bezier(.16,1,.3,1), background .2s; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-ghost { border: 1px solid var(--line); color: var(--text); }
+.btn-ghost:hover { border-color: var(--muted); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
+/* hero: 좌 텍스트 / 우 이미지 */
+.hero { min-height: calc(100dvh - 68px); display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; padding: 32px 0 64px; }
+.hero h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.12; letter-spacing: -0.035em; font-weight: 800; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p { margin-top: 20px; font-size: 1.15rem; color: var(--muted); max-width: 34ch; }
+.cta { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+.hero figure { aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* 핵심 가치: 비대칭 bento 3칸 */
+.values { padding: 96px 0; border-top: 1px solid var(--line); }
+.values h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); letter-spacing: -0.03em; line-height: 1.25; }
+.bento { margin-top: 40px; display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 16px; }
+.cell { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; }
+.cell i { font-size: 1.9rem; color: var(--accent); }
+.cell h3 { margin-top: 18px; font-size: 1.3rem; letter-spacing: -0.02em; }
+.cell p { margin-top: 8px; color: var(--muted); max-width: 42ch; }
+.cell.big { grid-row: span 2; background: var(--tint); border-color: transparent; display: flex; flex-direction: column; justify-content: space-between; }
+.cell.big h3 { font-size: 1.8rem; }
+.cell.photo { padding: 0; overflow: hidden; position: relative; min-height: 220px; }
+.cell.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+/* 등장 모션: 첫 화면 위계를 순서대로 보여 줌 */
+@media (prefers-reduced-motion: no-preference) {
+  .rise { opacity: 0; transform: translateY(16px); animation: rise .7s cubic-bezier(.16,1,.3,1) forwards; animation-delay: calc(var(--i, 0) * 90ms); }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+}
+
+@media (max-width: 767px) {
+  .nav ul { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 32px; min-height: auto; padding: 24px 0 48px; }
+  .hero figure { aspect-ratio: 16 / 10; }
+  .bento { grid-template-columns: 1fr; }
+  .cell.big { grid-row: auto; }
+  .values { padding: 64px 0; }
+}
+</style>
+</head>
 <body>
-    <!-- ******HEADER****** --> 
-    <header id="header" class="header">  
-        <div class="container">       
-            <h1 class="logo">
-                <a class="scrollto" href="#hero">
-                    <span class="logo-icon-wrapper"><img class="logo-icon" src="assets/images/logo-icon.svg" alt="icon"></span>
-                    <span class="text"><span class="highlight">AI</span>WALL</span></a>
-            </h1><!--//logo-->
-            <nav class="main-nav navbar-expand-md float-right navbar-inverse" role="navigation">
-                
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button><!--//nav-toggle-->
-                
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item"><a class="active nav-link scrollto" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
-                        <li class="nav-item"><a class="nav-link scrollto" href="#features">AI Features</a></li> 
-                        
-                        <li class="nav-item"><a class="nav-link scrollto" href="#ChatBotfeatures">ChatBot Features</a></li> 
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="./"><i class="ti ti-rocket" aria-hidden="true"></i>로켓보안</a>
+    <nav aria-label="주요 메뉴">
+      <ul>
+        <li><a href="#values">서비스</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary" href="#contact">도입 문의</a>
+  </header>
 
-                        <li class="nav-item"><a class="nav-link scrollto" href="#team">Team</a></li>
-                        <li class="nav-item"><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                    </ul><!--//nav-->
-                </div><!--//navabr-collapse-->
-            </nav><!--//main-nav-->                     
-        </div><!--//container-->
-    </header><!--//header-->
-    
-    <div id="hero" class="hero-section">
-        
-        <div id="hero-carousel" class="hero-carousel carousel carousel-fade slide" data-ride="carousel" data-interval="10000">
-            
-            <div class="figure-holder-wrapper">
-        		<div class="container">
-            		<div class="row justify-content-end">
-                		<div class="figure-holder">
-                	        <img class="figure-image img-fluid" src="assets/images/imac.png" alt="image" />
-                        </div><!--//figure-holder-->
-            		</div><!--//row-->
-        		</div><!--//container-->
-    		</div><!--//figure-holder-wrapper-->
-            
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li class="active" data-slide-to="0" data-target="#hero-carousel"></li>
-				<li data-slide-to="1" data-target="#hero-carousel"></li>
-				<li data-slide-to="2" data-target="#hero-carousel"></li>
-			</ol>
-			
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner">
-    			
-				<div class="carousel-item item-1 active">
-					<div class="item-content container">
-    					<div class="item-content-inner">
-    				        
-				            <h2 class="heading">ICTIS AI Service<br class="d-none d-md-block">Install aiwall app</h2>
-				            <p class="intro">인공지능으로 악성코드를 찾아라 프로젝트!</p>
-				            <a class="btn btn-primary btn-cta" href="assets/download/aiwall.apk" target="_blank">AIWALL APP Download Now</a>
-    				        
-    					</div><!--//item-content-inner-->
-					</div><!--//item-content-->
-				</div><!--//item-->
-				
-				<div class="carousel-item item-2">
-					<div class="item-content container">
-						<div class="item-content-inner">
-    				        
-				            <h2 class="heading">How it works?</h2>
-				            <p class="intro">ICTIS AI Service Landing: 인공지능 빅데이터 클라우드를 이용한 보안관제서비스 랜딩페이지!</p>
-				            <a class="btn btn-primary btn-cta" href="https://www.youtube.com/watch?v=tWlQ5RUv6Uw" target="_blank">Find out more on YOUTUBE</a>
-    				        
-    					</div><!--//item-content-inner-->
-					</div>
-				</div><!--//item-->
-				
-				<div class="carousel-item item-3">
-					<div class="item-content container">
-						<div class="item-content-inner">
-    				        
-				            <h2 class="heading">Ready to secure YOUR Service?</h2>
-				            <p class="intro">Get ICTIS service today and it will help you promote your product effectively!</p>
-				            <a class="btn btn-primary btn-cta" href="https://app.closer.ai/webchat/Bd8y67" target="_blank">Get Started with AI chatbot</a>
-    				        
-    					</div><!--//item-content-inner-->
-					</div>
-				</div><!--//item-->
-			</div><!--//carousel-inner-->
+  <main>
+    <section class="hero">
+      <div>
+        <h1 class="rise" style="--i:0">위협보다 먼저,<br><em>로켓처럼</em> 막습니다</h1>
+        <p class="rise" style="--i:1">AI가 위협을 먼저 찾고 바로 차단합니다. 기업 서비스를 빠르고 단단하게 지킵니다.</p>
+        <div class="cta rise" style="--i:2">
+          <a class="btn btn-primary" href="#contact">도입 문의 <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
+          <a class="btn btn-ghost" href="#values">서비스 보기</a>
+        </div>
+      </div>
+      <figure class="rise" style="--i:1">
+        <!-- TODO: 브랜드 실사 이미지로 교체 (권장 1200x1500) -->
+        <img src="https://picsum.photos/seed/rocket-security-hero/1200/1500" alt="보안 관제 환경" width="1200" height="1500" fetchpriority="high">
+      </figure>
+    </section>
 
-		</div><!--//carousel-->
-    </div><!--//hero-->
-    
+    <section id="values" class="values">
+      <h2>탐지와 차단을 한 흐름으로</h2>
+      <div class="bento">
+        <article class="cell big">
+          <i class="ti ti-bolt" aria-hidden="true"></i>
+          <div>
+            <h3>빠른 탐지</h3>
+            <p>AI가 이상 징후를 실시간으로 살피고, 위협을 발견하면 바로 알립니다.</p>
+          </div>
+        </article>
+        <article class="cell">
+          <i class="ti ti-shield-lock" aria-hidden="true"></i>
+          <h3>강한 차단</h3>
+          <p>확인된 위협은 서비스에 닿기 전에 자동으로 막습니다.</p>
+        </article>
+        <div class="cell photo">
+          <!-- TODO: 서비스 운영 사진으로 교체 (권장 800x500) -->
+          <img src="https://picsum.photos/seed/rocket-security-ops/800/500" alt="" loading="lazy">
+        </div>
+      </div>
+    </section>
+  </main>
 
-<!--Copyright (c) 2020 by shubham chaudhari (https://codepen.io/shubhamc_007/pen/zNJWPM)
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-업로드 html codepen.io -->
-
-<!--############# cskim add -->
-<div class="file-upload">
-      
-    <h2 margin:0 auto 0>카메라 접근권한을 허용해주세요</h2>
-      <h4 class="heading">인공지능이 해커인지 아닌지 확인해 드립니다</h4>
-      <button type="button" onclick="init()">카메라로 해커인지 아닌지 확인해 볼까요? Start!</button>
+  <footer id="contact">
+    <span>© 로켓보안. 빠르고 강한 보안</span>
+    <!-- TODO: 실제 문의 이메일로 교체 -->
+    <span>도입 문의: 연락처 준비 중</span>
+  </footer>
 </div>
-
-    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <div class="file-upload">
-        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
-
-        <div class="image-upload-wrap">
-            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-            <div class="drag-text">
-                <h3>Drag and drop 
-                    <br> a file or select add Image</h3>
-            </div>
-        </div>
-        <div class="file-upload-content">
-            <img class="file-upload-image" id='face-image' src="#" alt="your image" />
-            <div class="image-title-wrap">
-                <button type="button" onclick="removeUpload()" class="remove-image">Remove
-                    <span class="image-title">Uploaded Image</span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div id="webcam-container"></div>
-    <div id="label-container"></div>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-    <script>
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('.image-upload-wrap').hide();
-                    $('.file-upload-image').attr('src', e.target.result);
-                    $('.file-upload-content').show();
-                    $('.image-title').html(input.files[0].name);
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                removeUpload();
-            }
-        }
-
-        function removeUpload() {
-            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-            $('.file-upload-content').hide();
-            $('.image-upload-wrap').show();
-        }
-        $('.image-upload-wrap').bind('dragover', function() {
-            $('.image-upload-wrap').addClass('image-dropping');
-        });
-        $('.image-upload-wrap').bind('dragleave', function() {
-            $('.image-upload-wrap').removeClass('image-dropping');
-        });
-    </script>
-    <script type="text/javascript">
-        // More API functions here:
-        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-        // the link to your model provided by Teachable Machine export panel
-
-        // cskim  티처블 머신러닝 
-        const URL = "https://teachablemachine.withgoogle.com/models/6XvjORXEJ/";
-        let model, webcam, labelContainer, maxPredictions;
-        // Load the image model and setup the webcam
-        async function init() {
-            const modelURL = URL + "model.json";
-            const metadataURL = URL + "metadata.json";
-            // load the model and metadata
-            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-            // or files from your local hard drive
-            // Note: the pose library adds "tmImage" object to your window (window.tmImage)
-            model = await tmImage.load(modelURL, metadataURL);
-            maxPredictions = model.getTotalClasses();
-            labelContainer = document.getElementById("label-container");
-            for (let i = 0; i < maxPredictions; i++) { // and class labels
-                labelContainer.appendChild(document.createElement("div"));
-            }
-        }
-        // run the webcam image through the image model
-        async function predict() {
-            // predict can take in an image, video or canvas html element
-            var image = document.getElementById("face-image")
-            const prediction = await model.predict(image, false);
-            for (let i = 0; i < maxPredictions; i++) {
-                const classPrediction =
-                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-                labelContainer.childNodes[i].innerHTML = classPrediction;
-            }
-        }
-    </script>
-
-
-
-
-<div class="file-upload">
-    <button type="button" onclick="init()">Start</button>
-    <button type="button" onclick="predict()">Predict</button>
-</div>
-
-
-
-    <div id="about" class="about-section">
-        <div class="container text-center">
-            <h2 class="section-title">ICTIS AIWALL Service(인공지능보안서비스)에 사용된 기술</h2>
-            <p class="intro">ICTIS AIWALL uses modern front-end technologies and is packed with useful components and widgets to speed up your development</p>
-            <ul class="technologies list-inline">
-                <li class="list-inline-item"><img src="assets/images/tensorflow.png" alt="tensorflow"></li>
-                <li class="list-inline-item"><img src="assets/images/logo-html5.svg" alt="HTML5"></li>
-                <li class="list-inline-item"><img src="assets/images/logo-bootstrap.svg" alt="Bootstrap"></li>
-                <li class="list-inline-item"><img src="assets/images/logo-jquery.svg" alt="jQuery"></li>
-            </ul>
-            
-            <div class="items-wrapper row">
-                <div class="item col-md-4 col-12">
-                    <div class="item-inner">
-                        <div class="figure-holder">
-                            <img class="figure-image" src="assets/images/figure-1.png" alt="image">
-                        </div><!--//figure-holder-->
-                        <h3 class="item-title">Benefit AIWALL</h3>
-                        <div class="item-desc">
-                            인공지능을 이용하여 악성코드를 직관적으로 분석할 수 있습니다.
-                        </div><!--//item-desc-->
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-12">
-                    <div class="item-inner">
-                        <div class="figure-holder">
-                            <img class="figure-image" src="assets/images/figure-2.png" alt="image">
-                        </div><!--//figure-holder-->
-                        <h3 class="item-title">Benefit Anytime</h3>
-                        <div class="item-desc">
-                            보안서비스는 24시간 365일 무중단 관제 모니터링 서비스를 제공합니다. </div><!--//item-desc-->
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-                <div class="item col-md-4 col-12">
-                    <div class="item-inner">
-                        <div class="figure-holder">
-
-                            <a href="https://aiwall.kr/assets/Download/ICTIS재택-0_3_debug.apk" target="_blank">
-                            <img class="figure-image" src="assets/images/figure-3.png" alt="image">
-                            </a>
-                        </div><!--//figure-holder-->
-
-                        <a href="https://aiwall.kr/assets/Download/ICTIS재택-0_3_debug.apk" target="_blank">
-
-                        <h3 class="item-title">Benefit Anywhere</h3>
-
-                        </a>
-                        
-                        <div class="item-desc">
-                            사무실 모바일 온프레미스 클라우드 어디에서나 안전하게 사용 가능합니다 </div><!--//item-desc-->
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-            </div><!--//items-wrapper-->
-        </div><!--//container-->
-    </div><!--//about-section-->
-    
-    <div id="testimonials" class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title text-center">Many Happy Customers</h2>
-            <div class="item mx-auto">
-                <div class="profile-holder">
-                    <img class="profile-image" src="assets/images/profile-1.png" alt="profile">
-                </div>
-                <div class="quote-holder">
-                    <blockquote class="quote">
-                        <p>여섯짤 김썬입니다. 여섯짤도 인공지능에 대해 이해 할 수 있어요. 아빠한테 텐쪄뿔로 CNN RNN GAN 배우는 중인데 생각보다는 쉬워요 ^^</p>
-                        <div class="quote-source">
-                            <span class="name">@김선,</span>
-                            <span class="meta">korea, seoul, 서울 양천구 목동</span>
-                        </div><!--//quote-source-->
-                    </blockquote>
-                </div><!--//quote-holder-->
-            </div><!--//item-->
-            <div class="item item-reversed mx-auto">
-                <div class="profile-holder">
-                    <img class="profile-image" src="assets/images/profile-2.png" alt="profile">
-                </div>
-                <div class="quote-holder">
-                    <blockquote class="quote">
-                        <p>AI를 쉽고 편하게 구성했군요 이해하기 쉬워 좋습니다 영국에서도 응원합니다</p>
-                        <div class="quote-source">
-                            <span class="name">@LisaWhite,</span>
-                            <span class="meta">London</span>
-                        </div><!--//quote-source-->
-                    </blockquote>
-                </div><!--//quote-holder-->
-            </div><!--//item-->
-            <div class="item mx-auto">
-                <div class="profile-holder">
-                    <img class="profile-image" src="assets/images/profile-3.png" alt="profile">
-                </div>
-                <div class="quote-holder">
-                    <blockquote class="quote">
-                        <p>독일에 사는 Matt 라고 합니다 계속발전하는 AI보안관제 서비스를 기대합니다. </p>
-                        <div class="quote-source">
-                            <span class="name">@MattH,</span>
-                            <span class="meta">Berlin</span>
-                        </div><!--//quote-source-->
-                    </blockquote>
-                </div><!--//quote-holder-->
-            </div><!--//item-->
-            <div class="item item-reversed mx-auto">
-                <div class="profile-holder">
-                    <img class="profile-image" src="assets/images/profile-4.png" alt="profile">
-                </div>
-                <div class="quote-holder">
-                    <blockquote class="quote">
-                        <p>코로나 때문에 한국에 못가서 아쉽습니다. 발전된 한국의 AI보안서비스가 놀랍습니다.</p>
-                         <div class="quote-source">
-                            <span class="name">@RyanW,</span>
-                            <span class="meta">Paris</span>
-                        </div><!--//quote-source-->
-                    </blockquote>
-                    
-                </div><!--//quote-holder-->
-            </div><!--//item-->
-        </div><!--//container-->
-    </div><!--//testimonials-->
-    
-    <div id="features" class="features-section">
-        <div class="container text-center">
-            <h2 class="section-title">Discover Features</h2>
-            <p class="intro">Our product features. The screenshots used here were taken from <a href="https://aiwall.kr/" target="_blank">AIWALL features</a></p>
-            
-            <div class="tabbed-area row">
-                
-                <!-- Nav tabs -->
-                <div class="feature-nav nav nav-pill flex-column col-lg-4 col-md-6 col-12 order-0 order-md-1" role="tablist" aria-orientation="vertical">
-                     <a class="nav-link active mb-lg-3" href="#feature-1" aria-controls="feature-1" data-toggle="pill" role="tab" aria-selected="true"><i class="fas fa-magic mr-2"></i>20+ Use Case-based App Pages</a>
-                     <a class="nav-link mb-lg-3" href="#feature-2" aria-controls="feature-2" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-cubes mr-2"></i>100+ Components and Widgets</a>
-                     <a class="nav-link mb-lg-3" href="#feature-3" aria-controls="feature-3" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-chart-bar mr-2"></i>Useful Chart Libraries</a>
-                     <a class="nav-link mb-lg-3" href="#feature-4" aria-controls="feature-4" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-code mr-2"></i>Valid HTML5 + CSS3</a>
-                     <a class="nav-link mb-lg-3" href="#feature-5" aria-controls="feature-5" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-rocket mr-2"></i>Built on Bootstrap 4 &amp; SCSS</a>
-                     <a class="nav-link mb-lg-3" href="#feature-6" aria-controls="feature-6" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-mobile-alt mr-2"></i>Fully Responsive</a>
-                     <a class="nav-link mb-lg-3" href="#feature-7" aria-controls="feature-7" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-star mr-2"></i>Beautiful UI</a>
-                     <a class="nav-link mb-lg-3" href="#feature-8" aria-controls="feature-8" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-heart mr-2"></i>Free Updates &amp; Support</a>                   
-                </div>
-                
-                <!-- Tab panes -->
-                <div class="feature-content tab-content col-lg-8 col-md-6 col-12 order-1 order-md-0">
-                    <div role="tabpanel" class="tab-pane fade show active" id="feature-1">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-1.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-2">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-2.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-3">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-3.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-4">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-4.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-5">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-5.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-6">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-6.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-7">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-7.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-8">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-8.png" alt="screenshot" ></a>
-                    </div>
-                    
-                </div><!--//feature-content-->
-
-                
-            </div><!--//tabbed-area-->
-            
-        </div><!--//container-->
-    </div><!--//features-->
-    
-
-    <div id="ChatBotfeatures" class="features-section">
-        <div class="container text-center">
-            <h2 class="section-title">Discover ChatBotFeatures</h2>
-            <p class="intro">Our product features. The screenshots used here were taken from <a href="https://aiwall.kr/" target="_blank">AIWALL features</a></p>
-            
-            <div class="tabbed-area row">
-                
-                <!-- Nav tabs -->
-                <div class="feature-nav nav nav-pill flex-column col-lg-4 col-md-6 col-12 order-0 order-md-1" role="tablist" aria-orientation="vertical">
-                     <a class="nav-link active mb-lg-3" href="#feature-1" aria-controls="feature-1" data-toggle="pill" role="tab" aria-selected="true"><i class="fas fa-magic mr-2"></i>20+ Use Case-based App Pages</a>
-                     <a class="nav-link mb-lg-3" href="#feature-2" aria-controls="feature-2" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-cubes mr-2"></i>100+ Components and Widgets</a>
-                     <a class="nav-link mb-lg-3" href="#feature-3" aria-controls="feature-3" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-chart-bar mr-2"></i>Useful Chart Libraries</a>
-                     <a class="nav-link mb-lg-3" href="#feature-4" aria-controls="feature-4" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-code mr-2"></i>Valid HTML5 + CSS3</a>
-                     <a class="nav-link mb-lg-3" href="#feature-5" aria-controls="feature-5" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-rocket mr-2"></i>Built on Bootstrap 4 &amp; SCSS</a>
-                     <a class="nav-link mb-lg-3" href="#feature-6" aria-controls="feature-6" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-mobile-alt mr-2"></i>Fully Responsive</a>
-                     <a class="nav-link mb-lg-3" href="#feature-7" aria-controls="feature-7" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-star mr-2"></i>Beautiful UI</a>
-                     <a class="nav-link mb-lg-3" href="#feature-8" aria-controls="feature-8" data-toggle="pill" role="tab" aria-selected="false"><i class="fas fa-heart mr-2"></i>Free Updates &amp; Support</a>                   
-                </div>
-                
-                <!-- Tab panes -->
-                <div class="feature-content tab-content col-lg-8 col-md-6 col-12 order-1 order-md-0">
-                    <div role="tabpanel" class="tab-pane fade show active" id="feature-1">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-chatbot.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-2">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-chatbot2.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-3">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-chatbot3.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-4">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-chatbot4.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-5">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-5.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-6">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-6.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-7">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-7.png" alt="screenshot" ></a>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="feature-8">
-                        <a href="https://app.closer.ai/webchat/Bd8y67" target="_blank"><img class="img-fluid" src="assets/images/feature-8.png" alt="screenshot" ></a>
-                    </div>
-                    
-                </div><!--//feature-content-->
-
-                
-            </div><!--//tabbed-area-->
-            
-        </div><!--//container-->
-    </div><!--//ChatBotfeatures-->
-
-
-
-
-    <div class="team-section" id="team">
-        <div class="container text-center">
-            <h2 class="section-title">Our Team</h2>
-            <div class="story">
-                <p>우리팀을 소개합니다. Introduce my team here. </p>
-            </div>
-            <div class="members-wrapper row">
-                <div class="item col-md-6 col-12">
-                    <div class="item-inner">
-                        <div class="profile mb-2">
-                            <img class="profile-image" src="assets/images/team-1.png" alt="김기술사" />
-                        </div>
-                        
-                        <div class="member-content">
-                            <h3 class="member-name">Single Kim </h3>
-                            <div class="member-title">Full-Stack 김기술사</div>
-                            <ul class="social list-inline">
-                                <li class="list-inline-item"><a class="twitter" href="https://twitter.com/digipol" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                
-                                <li class="list-inline-item"><a class="facebook" href="https://www.facebook.com/charles.kim.5030927" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                                <li class="list-inline-item"><a class="github" href="https://github.com/happytoto/" target="_blank"><i class="fab fa-github"></i></a></li>
-                                <li class="list-inline-item"><a class="Daum cafe" href="http://cafe.daum.net/caoo" target="_blank"><i class="fab fa-dribbble"></i></a></li>
-                               <li class="list-inline-item"><a class="medium" href="https://aiwall.kr/" target="_blank"><i class="fab fa-medium-m"></i></a></li>
-                                
-                            </ul>
-                            <div class="member-desc">
-                               <p>김기술사(Professional Engineer) is the Architect behind ICTIS AI Service. he makes <a href="https://aiwall.kr" target="_blank">AI Service</a> for developers. You can find him sharing useful UX and security related content on <a href="https://cafe.naver.com/securitycheck" target="_blank">Twitter</a> and <a href="https://www.facebook.com/3rdwavethemes/" target="_blank">Facebook</a>. Follow him if you like what he does!</p>
-                            </div><!--//member-desc-->
-                        </div><!--//member-content-->
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-                <div class="item col-md-6 col-12">
-                    <div class="item-inner">
-                        <div class="profile mb-2">
-                            <img class="profile-image" src="assets/images/team-2.png" alt="김진" />
-                        </div>
-                        
-                        <div class="member-content">
-                            <h3 class="member-name">Jin KIM</h3>
-                            <div class="member-title">Successful completion of Hour of Code</div>
-                            <ul class="social list-inline">
-                                <li class="list-inline-item"><a class="twitter" href="http://twitter.com/digipol" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                <li class="list-inline-item"><a href="http://cafe.daum.net/caoo" target="_blank"><i class="fas fa-globe"></i></a></li>
-                                <li class="list-inline-item"><a class="github" href="https://github.com/happytoto" target="_blank"><i class="fab fa-github"></i></a></li>
-                               
-                                
-                            </ul>
-                            <div class="member-desc">
-                                <p>Kim Jin demonstration an understanding of the basic concepts of Computer Science<a href="http://cafe.daum.net/caoo" target="_blank">Twitter</a> for fresh developer tips and check out his <a href="https://github.com/happytoto" target="_blank">Github</a> for useful open-source tools.
-</p>
-                            </div><!--//member-desc-->
-                        </div><!--//member-content-->
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-            </div><!--//members-wrapper-->
-        </div>
-    </div><!--//team-section-->
-    
-    <div id="pricing" class="pricing-section">
-        <div class="container text-center">
-            <h2 class="section-title">Pricing</h2>
-            <div class="intro">ICTIS AI AIWALL's future updates are 100% FREE for existing customers</div>
-            <div class="pricing-wrapper row">
-                <div class="item item-1 col-md-4 col-12">
-                    <div class="item-inner">
-                        <h3 class="item-heading">FREE<br><span class="item-heading-desc">(CC BY 3.0)</span></h3>
-                        <div class="price-figure">
-                            <span class="currency">$</span><span class="number">0</span>
-                        </div><!--//price-figure-->
-                        <ul class="list-unstyled mb-3">
-	                        <li class="mb-2"><i class="fas fa-check"></i> Single installation</li>
-	                        <li class="mb-2"><i class="fas fa-check"></i> Multiple installations</li>
-                            <li class="mb-2"><i class="fas fa-times"></i> Use without attribution link</li>
-                        </ul>
-                        <div class="mb-3"><a href="https://www.linkedin.com/in/charles-kim-aa319a8b/" target="_blank">License Details</a></div>
-                        <a class="btn btn-cta" href="https://aiwall.kr/">Get it now</a>
-                        
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-                <div class="item item-2 col-md-4 col-12">
-                    <div class="item-inner">
-                        <h3 class="item-heading">Single Application<br><span class="item-heading-desc">(Commercial License)</span></h3>
-                       
-                        <div class="price-figure">
-                            <span class="currency">$</span><span class="number">29,000</span>
-                        </div><!--//price-figure-->
-                        <ul class="list-unstyled mb-3">
-	                        <li class="mb-2"><i class="fas fa-check"></i> Single installation</li>
-	                        <li class="mb-2"><i class="fas fa-times"></i> Multiple installations</li>
-	                        <li class="mb-2"><i class="fas fa-check"></i> Use without attribution link</li>
-                        </ul>
-                        <div class="mb-3"><a href="https://aiwall.kr/" target="_blank">License Details</a></div>
-                        <a class="btn btn-cta" href="https://aiwall.kr/">Get it now</a>
-                        
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-                
-                <div class="item item-3 col-md-4 col-12">
-                    <div class="item-inner">
-                        <h3 class="item-heading">Multiple Applications<br><span class="item-heading-desc">(Commercial License)</span></h3>
-                        <div class="price-figure">
-                            <span class="currency">$</span><span class="number">99,000</span>
-                        </div><!--//price-figure-->
-                        <ul class="list-unstyled mb-3">
-	                        <li class="mb-2"><i class="fas fa-check"></i> Single installation</li>
-	                        <li class="mb-2"><i class="fas fa-check"></i> Multiple installations</li>
-	                        <li class="mb-2"><i class="fas fa-check"></i> Use without attribution link</li>
-                        </ul>
-                        <div class="mb-3"><a href="https://aiwall.kr/" target="_blank">License Details</a></div>
-                        <a class="btn btn-cta" href="https://aiwall.kr/" target="_blank">Get it now</a>
-                        
-                    </div><!--//item-inner-->
-                </div><!--//item-->
-            </div><!--//pricing-wrapper-->
-            
-        </div><!--//container-->
-    </div><!--//pricing-section-->
-    <div id="contact" class="contact-section">
-        <div class="container text-center">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-content">
-                <p>대한민국 보안의 미래를 이끌어갈 당신의 젊은 에너지를 기대합니다.</p>
-                
-            </div>
-            <a class="btn btn-cta btn-primary" href="https://www.linkedin.com/in/charles-kim-aa319a8b/">Get in Touch</a>
-            
-        </div><!--//container-->
-    </div><!--//contact-section-->
-    
-    <div>
-    <ins class="kakao_ad_area" style="display:none;" 
-    data-ad-unit    = "DAN-sohv6hu5zhv5" 
-    data-ad-width   = "320" 
-    data-ad-height  = "100"></ins> 
-   <script type="text/javascript" src="/t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    </div>
-
-    <footer class="footer text-center">
-        <div class="container">
-            <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
-            <small class="copyright">Designed with <i class="fas fa-heart"></i> by <a href="https://themes.3rdwavemedia.com/" target="_blank">xiaoying</a> for developers</small>
-            
-            
-        </div><!--//container-->
-    </footer>
-     
-    <!-- Javascript -->          
-    <script type="text/javascript" src="assets/plugins/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>     
-    <script type="text/javascript" src="assets/js/main.js"></script> 
-       
 </body>
-</html> 
-
+</html>
